@@ -4,9 +4,9 @@
 
 ## Preview
 
-[![Resume Preview](https://assets.startbootstrap.com/img/screenshots/themes/resume.png)](https://github.com/ogalo-chris/aws-resume-site/)
+[![Resume Preview](dist/assets/img/preview.png)
 
-**[View Live Preview](https://github.com/ogalo-chris/aws-resume-site/)**
+**[View Live Preview](https://chris.jodevops.xyz/)**
 
 ## Status
 
