@@ -98,6 +98,7 @@ Visit your domain https://yourdomain.com
 Should load your static site with HTTPS
 
 You can also try to modify the project and incorporate CI/CD Using Github Actions. 
+![Deploy to S3](https://github.com/YOUR_USERNAME/YOUR_REPO_NAME/actions/workflows/deploy.yml/badge.svg)
 
 📘 Lessons Learned
 How to host static sites on AWS S3
