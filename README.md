@@ -1,3 +1,4 @@
+
 # [Start Bootstrap - Resume](https://startbootstrap.com/theme/resume/)
 
 [Resume](https://startbootstrap.com/theme/resume/) is a resume and CV theme for [Bootstrap](https://getbootstrap.com/) created by [Start Bootstrap](https://startbootstrap.com/). This theme features a fixed sidebar with content sections to build a simple, yet elegant resume.
@@ -28,41 +29,81 @@ To begin using this template, choose one of the following options to get started
 
 After downloading, simply edit the HTML and CSS files included with `dist` directory. These are the only files you need to worry about, you can ignore everything else! To preview the changes you make to the code, you can open the `index.html` file in your web browser.
 
-### Advanced Usage
-
-Clone the source files of the theme and navigate into the theme's root directory. Run `npm install` and then run `npm start` which will open up a preview of the template in your default browser, watch for changes to core template files, and live reload the browser when changes are saved. You can view the `package.json` file to see which scripts are included.
-
-#### npm Scripts
-
-- `npm run build` builds the project - this builds assets, HTML, JS, and CSS into `dist`
-- `npm run build:assets` copies the files in the `src/assets/` directory into `dist`
-- `npm run build:pug` compiles the Pug located in the `src/pug/` directory into `dist`
-- `npm run build:scripts` brings the `src/js/scripts.js` file into `dist`
-- `npm run build:scss` compiles the SCSS files located in the `src/scss/` directory into `dist`
-- `npm run clean` deletes the `dist` directory to prepare for rebuilding the project
-- `npm run start:debug` runs the project in debug mode
-- `npm start` or `npm run start` runs the project, launches a live preview in your default browser, and watches for changes made to files in `src`
-
-You must have npm installed in order to use this build environment.
-
 ## Bugs and Issues
 
 Have a bug or an issue with this template? [Open a new issue](https://github.com/StartBootstrap/startbootstrap-resume/issues) here on GitHub or leave a comment on the [theme overview page at Start Bootstrap](https://startbootstrap.com/theme/resume/).
 
-## About
+# 🚀 Static Website Hosting on AWS (S3 + CloudFront + Route 53 + SSL)
 
-Start Bootstrap is an open source library of free Bootstrap themes and templates. All of the free themes and templates on Start Bootstrap are released under the MIT license, which means you can use them for any purpose, even for commercial projects.
+This project demonstrates how to deploy a static website using AWS services — ideal for beginners looking to get hands-on experience with cloud hosting.
 
-- <https://startbootstrap.com>
-- <https://twitter.com/SBootstrap>
+## 🔧 Tech Stack
 
-Start Bootstrap was created by and is maintained by **[David Miller](https://davidmiller.io/)**.
+- **Amazon S3** – stores static HTML/CSS/JS files
+- **Amazon CloudFront** – global CDN for fast delivery
+- **Route 53** – DNS & domain management
+- **AWS Certificate Manager** – SSL/TLS certificate for HTTPS
+- **HTML, CSS, JavaScript** – static frontend website
 
-- <https://davidmiller.io>
-- <https://twitter.com/davidmillerhere>
-- <https://github.com/davidtmiller>
+---
+## ✅ Setup Guide
 
-Start Bootstrap is based on the [Bootstrap](https://getbootstrap.com/) framework created by [Mark Otto](https://twitter.com/mdo) and [Jacob Thorton](https://twitter.com/fat).
+### 1. Create and Upload Static Files to S3
+- Create a public S3 bucket named `yourdomain.com`
+- Enable static website hosting
+- Upload files using AWS Console or:
+  ```bash
+  aws s3 sync . s3://yourdomain.com --acl public-read
+
+### 2. Make the Bucket Public
+•	Add this Bucket Policy:
+{
+  "Version": "2012-10-17",
+  "Statement": [{
+    "Effect": "Allow",
+    "Principal": "*",
+    "Action": "s3:GetObject",
+    "Resource": "arn:aws:s3:::yourdomain.com/*"
+  }]
+}
+
+### 4. Set Up AWS Certificate Manager (ACM)
+Get an SSL/TLS certificate for HTTPS.
+- Go to AWS Console > Certificate Manager > Request a certificate
+- Choose Public Certificate
+- Enter your domain (e.g., yourdomain.com and www.yourdomain.com)
+- Choose DNS validation
+- Add CNAME record in Route 53 when prompted
+- Once validated, the certificate will show as "Issued".
+
+### 5. Set Up CloudFront (for CDN & HTTPS)
+CloudFront caches and distributes your site globally, and allows HTTPS.
+- Go to CloudFront > Create distribution
+- Origin domain: your S3 bucket (choose the bucket endpoint, not the static site URL)
+- Viewer protocol policy: Redirect HTTP to HTTPS
+- Custom domain: yourdomain.com
+- SSL certificate: choose the one from ACM
+- Default root object: index.html
+✅ After deployment (takes ~10 min), you will get a CloudFront domain like d1234.cloudfront.net
+
+### 6. Register or Use Your Domain in Route 53
+Route 53 manages domain records.
+- If you have a domain (e.g., from GoDaddy), migrate DNS to Route 53.
+Create a hosted zone in Route 53 with your domain name.
+Replace NS records in GoDaddy with the ones from Route 53.
+- Add an A Record (alias) in Route 53 pointing to your CloudFront distribution.
+
+### 7. Test Your Website
+Visit your domain https://yourdomain.com
+Should load your static site with HTTPS
+
+You can also try to modify the project and incorporate CI/CD Using Github Actions. 
+
+📘 Lessons Learned
+How to host static sites on AWS S3
+Working with DNS, SSL and CDNs
+Using infrastructure best practices on the cloud
+
 
 ## Copyright and License
 
